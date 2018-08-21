@@ -25,7 +25,7 @@ class FightersController < ApplicationController
 
 
 
-    def updateFighterStats
+    def updateFighter
         @fighter = Fighter.find(fighterParams[:id])
         
         @fighter.update(fighterParams)
@@ -33,6 +33,17 @@ class FightersController < ApplicationController
         if @fighter.save
             render json: @fighter
         else
+            render json: { errors: @fighter.errors.full_messages }
+        end
+    end
+
+    
+    def deleteFighter
+        @fighter = Fighter.find(fighterParams[:id])
+        
+        if @fighter.delete
+            render json: Fighter.all
+        else 
             render json: { errors: @fighter.errors.full_messages }
         end
     end
